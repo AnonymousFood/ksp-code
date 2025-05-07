@@ -16,7 +16,13 @@ FUNCTION initDisplay {
 FUNCTION updateValue {
     PARAMETER name, value, units, precision IS 1, row IS -1.
     
-    LOCAL displayText IS name + ": " + ROUND(value, precision) + " " + units + "      ".
+    LOCAL displayText IS "".
+    
+    IF value:ISTYPE("Scalar") {
+        SET displayText TO name + ": " + ROUND(value, precision):TOSTRING + " " + units + "      ".
+    } ELSE {
+        SET displayText TO name + ": " + value + " " + units + "      ".
+    }
     
     // Store in the global dictionary
     SET DISPLAY_VALUES[name] TO displayText.
